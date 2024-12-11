@@ -1,37 +1,40 @@
+{{-- services.blade.php --}}
 @extends('layouts.master')
 
-@section('title', 'Our Services - School Lunch Boxes')
+@section('title', 'Our Services')
 
 @section('content')
-<div class="container mx-auto px-4">
-    <h1 class="text-4xl font-bold text-green-800 text-center mb-12">
-        Our Comprehensive Services
-    </h1>
-
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        @foreach($services as $service)
-            <div class="bg-white rounded-lg shadow-md p-6 text-center">
-                <div class="mb-4 flex justify-center">
-                    <img src="{{ asset('images/icons/' . $service['icon']) }}" 
-                         alt="{{ $service['title'] }}" 
-                         class="w-16 h-16 text-green-600">
-                </div>
-                <h3 class="text-2xl font-semibold text-green-700 mb-4">
-                    {{ $service['title'] }}
-                </h3>
-                <p class="text-gray-600">
-                    {{ $service['description'] }}
-                </p>
-            </div>
-        @endforeach
-    </div>
-
-    <section class="mt-16 text-center">
-        <h2 class="text-3xl font-bold text-green-800 mb-6">
-            Our Commitment to Quality
-        </h2>
-        <p class="max-w-3xl mx-auto text-gray-700 text-lg">
-            At School Lunch Boxes, we are dedicated to providing nutritious, delicious, 
-            and varied meal options. Our focus on health, freshness, and convenience 
-            sets us apart in the school catering industry.
-        </p>
+    <section>
+        <h2 class="text-center small-h2">Our Gourmet Lunch Boxes</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Lunch Box</th>
+                    <th>Price (PKR)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($lunchboxes as $lunchbox)
+                    <tr>
+                        <td>{{ $lunchbox->name }}</td>
+                        <td>{{ $lunchbox->price }}</td>
+                        <td>
+                            <button class="details-btn" data-details-id="details-{{ $lunchbox->id }}">Show Details</button>
+                            <button class="hide-btn" data-hide-id="details-{{ $lunchbox->id }}">Hide Details</button>
+                        </td>
+                    </tr>
+                    <tr class="details-row" id="details-{{ $lunchbox->id }}" style="display: none;">
+                        <td colspan="3">
+                            <div class="details-content">
+                                <strong>Ingredients:</strong> {{ $lunchbox->ingredients ?? 'N/A' }} <br>
+                                <strong>Nutritional Info:</strong> {{ $lunchbox->nutritional_info ?? 'N/A' }} <br>
+                                <strong>Available:</strong> {{ $lunchbox->is_available ? 'Yes' : 'No' }}
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </section>
+@endsection

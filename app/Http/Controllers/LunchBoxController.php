@@ -24,6 +24,12 @@ class LunchBoxController extends Controller
         return view('admin.lunchboxes.create');
     }
 
+    public function services()
+    {
+        $lunchboxes = LunchBox::all();
+        return view('services', ['lunchboxes' => $lunchboxes]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([

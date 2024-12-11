@@ -9,30 +9,12 @@ use App\Http\Controllers\TestimonialController;
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [HomeController::class, 'about'])->name('about');
-Route::get('/services', [HomeController::class, 'services'])->name('services');
-Route::get('/menu', [LunchBoxController::class, 'index'])->name('menu');
+Route::get('/about', [TestimonialController::class, 'about'])->name('about');
+Route::get('/services', [LunchBoxController::class, 'services'])->name('services');
+Route::view('/register', 'register')->name('register');
+Route::view('/contact', 'contact')->name('contact');
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// Admin Routes (Protected)
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    // Lunch Box Management
-    Route::get('/lunchboxes', [LunchBoxController::class, 'adminIndex'])->name('admin.lunchboxes');
-    Route::get('/lunchboxes/create', [LunchBoxController::class, 'create'])->name('admin.lunchboxes.create');
-    Route::post('/lunchboxes', [LunchBoxController::class, 'store'])->name('admin.lunchboxes.store');
-    Route::get('/lunchboxes/{lunchBox}/edit', [LunchBoxController::class, 'edit'])->name('admin.lunchboxes.edit');
-    Route::put('/lunchboxes/{lunchBox}', [LunchBoxController::class, 'update'])->name('admin.lunchboxes.update');
-    Route::delete('/lunchboxes/{lunchBox}', [LunchBoxController::class, 'destroy'])->name('admin.lunchboxes.destroy');
-
-    // Testimonial Management
-    Route::get('/testimonials', [TestimonialController::class, 'index'])->name('admin.testimonials');
-    Route::get('/testimonials/create', [TestimonialController::class, 'create'])->name('admin.testimonials.create');
-    Route::post('/testimonials', [TestimonialController::class, 'store'])->name('admin.testimonials.store');
-    Route::get('/testimonials/{testimonial}/edit', [TestimonialController::class, 'edit'])->name('admin.testimonials.edit');
-    Route::put('/testimonials/{testimonial}', [TestimonialController::class, 'update'])->name('admin.testimonials.update');
-    Route::delete('/testimonials/{testimonial}', [TestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
-});
